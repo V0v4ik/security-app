@@ -10,16 +10,16 @@
     <div>
         <label>username</label>
         <input field="*{username}"/>
-        <p each="error : ${#fields.errors('lastName')}"
-           text="${error}">Validation error</p>
+        <!--<p each="error : ${#fields.errors('lastName')}"
+           text="${error}">Validation error</p>-->
     </div>
     <div>
         <label>password</label>
         <input type="password" field="*{password}"/>
-        <p each="error : ${#fields.errors('password')}"
-           text="${error}">Validation error</p>
+        <!--<p each="error : ${#fields.errors('password')}"
+           text="${error}">Validation error</p>-->
     </div>
-    <button type="submit" text="#{label.form.submit}">submit</button>
+    <button type="submit" text="#{label.form.submit}">Sign in</button>
 </form>
 
 <a href="/registration">New User</a>
