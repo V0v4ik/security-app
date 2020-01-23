@@ -1,5 +1,6 @@
 package com.volodymyr.studying.model;
 
+import com.volodymyr.studying.validation.PasswordMatches;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -14,6 +15,7 @@ import javax.validation.constraints.Size;
 @NoArgsConstructor
 @Entity
 @Table(name = "users")
+@PasswordMatches
 public class User {
 
     //TODO where should I save salt? In DB?

@@ -1,6 +1,6 @@
 package com.volodymyr.studying.controller;
 
-import com.volodymyr.studying.model.Role;
+import com.volodymyr.studying.exceptions.NoSuchUserException;
 import com.volodymyr.studying.model.User;
 import com.volodymyr.studying.repository.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -31,9 +31,8 @@ public class LoginController {
     public String loginUser(@Validated @ModelAttribute("user") User user) {
         User userByUsername = userRepository.findByUsername(user.getUsername());
         if (userByUsername == null) {
-            throw new RuntimeException("User doesn't exist");
+            throw new NoSuchUserException("User doesn't exist");
         }
-
         return "redirect:/home";
     }
 }

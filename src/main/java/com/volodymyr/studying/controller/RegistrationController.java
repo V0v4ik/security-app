@@ -1,9 +1,11 @@
 package com.volodymyr.studying.controller;
 
+import com.volodymyr.studying.exceptions.UserAlreadyExistException;
 import com.volodymyr.studying.model.Role;
 import com.volodymyr.studying.model.User;
 import com.volodymyr.studying.repository.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.annotation.Validated;
@@ -19,6 +21,9 @@ public class RegistrationController {
     @Autowired
     private UserRepository userRepository;
 
+    @Autowired
+    private PasswordEncoder passwordEncoder;
+
     @GetMapping
     public String showLRegistrationPage(Model model) {
         model.addAttribute("user", new User());
@@ -30,10 +35,11 @@ public class RegistrationController {
         User userByUsername = userRepository.findByUsername(user.getUsername());
         User userByEmail = userRepository.findByEmail(user.getEmail());
         if (userByUsername != null || userByEmail != null) {
-            throw new RuntimeException("User already exist");
+            throw new UserAlreadyExistException("User already exist");
         }
         user.setRole(Role.ROLE_USER);
         user.setActive(true);
+        user.setPassword(passwordEncoder.encode(user.getPassword()));
         userRepository.save(user);
         return "redirect:/login";
     }
